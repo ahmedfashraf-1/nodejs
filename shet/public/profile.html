@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+</head>
+<body>
+<h1>User Profile</h1>
+    <p>Username: <span id="username"></span></p>
+    <p>Email: <span id="email"></span></p>
+<form action="/profile/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>
+<script>
+    const responseAPI = async () => {
+    try {
+        let res = await fetch('/check-session');
+        const data = await res.json();
+        if (data.username && data.email) {
+        document.getElementById('username').textContent = data.username;
+        document.getElementById('email').textContent = data.email;
+        } else {
+        window.location.href = '/';
+        }
+    } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        window.location.href = '/';
+    }
+    };
+    document.addEventListener('DOMContentLoaded', responseAPI);
+</script>
+</body>
+</html>
